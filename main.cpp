@@ -1,81 +1,80 @@
 #include <iostream>
-#include <sstream>
 #include <cstring>
+#include <sstream>
 
 using namespace std;
+int main ()
+{
+string l;
+double x,y,z;
+char m,n='a';
 
-int main()
-{	
-    float result, peremA, peremP;
-    char znak, znakDo = '*';
-	
-    string stroka;
-    getline( cin, stroka );
-    stroka = "0" + stroka;
+getline( cin, l);
+istringstream stream(l);
 
-    istringstream stream( stroka );
-
-    stream >> result;
-	
-    while ( stream >> znak ) {
-    	stream >> peremA;
-
-	if ( znak == '+' ) {
-        result += peremA;
-	znakDo = '+';
-	peremP = peremA;
-        }
+stream>>x;
+while ( stream>>m)
+{
+stream>>y;
+if( m=='+')
+{
+	x=x+y;
+	n='+';      
+	z=y;        
+}
+if (m=='-')
+{
+	x=x-y;
+	n='-';
+	z=y;
+}
+if ((m=='*')&&(n=='a')) 
+{
+	x=x*y;	
+}
+if ((m=='/')&&(n=='a')) 
+{
+	if (y==0 && x==0) {cout<<"nan"; return -1;}
+       else if (x!=0 && y==0) {cout<<"inf"; return -1;}
+       else
+       x=x/y;	
+}
+if ((m=='*')&&(n=='+'))
+{
+	x=x-z;
+	z=z*y;
+	x=x+z;
+	n='+';
+}
+if ((m=='*')&&(n=='-'))
+{
+	x=x+z;
+	z=z*y;
+	x=x-z;
+	n='-';
+}
+if ((m=='/')&&(n=='+'))
+{
+	x=x-z;
 		
-        else if ( znak == '-' ) {
-	result -= peremA;
-	znakDo = '-';
-	peremP = peremA;
-        }
+		if (z==0 && y==0) {cout<<"nan"; return -1;}
+    	else if (z!=0 && y==0) {cout<<"inf"; return -1;}
+    	else
+    	z=z/y;
+    	x=x+z;
+    	n='+';
+}
+if ((m=='/')&&(n=='-'))
+{
+	x=x+z;
 		
-    	else if ( ( znak == '*' ) && ( znakDo == '*' ) ) {
-       	    result *= peremA;
-	}
-		
-    	else if ( ( znak == '/' ) && ( znakDo == '*' ) ) {
-	    result /= peremA;
-	}
-		
-    	else if ( ( znak == '*' ) && ( znakDo == '+' ) ) {
-	    result -= peremP;
-	    peremP *= peremA;
-	    result += peremP;
-	    znakDo = '+';
-	}
-		
-        else if ( ( znak == '*' ) && ( znakDo == '-' ) ) {
-	    result += peremP;
-	    peremP *= peremA;
-	    result -= peremP;
-	    znakDo = '-';
-	}
-		
-        else if ( ( znak == '/' ) && ( znakDo == '+' ) ) {
-   	    result -= peremP;
-	    peremP /= peremA;
-	    result += peremP;
-	    znakDo = '+';
-	}
-		
-        else if ( ( znak == '/' ) && ( znakDo == '-' ) ) {
-	    result += peremP;
-	    peremP /= peremA;
-	    result -= peremP;
-	    znakDo = '+';
-	}
-		
-        else {
-	    cout << "Error";
-	    cin.get();
-	    return 0;
-	}
-    }	
-  
-    cout << result;
-    cin.get();
-    return 0;
+		if (z==0 && y==0) {cout<<"nan"; return -1;}
+    	else if (z!=0 && y==0) {cout<<"inf"; return -1;}
+    	else
+    	z=z/y;
+    	x=x-z;
+    	n='-';
+}
+}
+cout<<x;
 }
